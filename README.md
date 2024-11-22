@@ -45,3 +45,27 @@
 >       + **Model** — основная логика программы (работа с данными, вычисления, запросы и так далее).
 >       + **View** — вид или представление (пользовательский интерфейс).
 >       + **ViewModel** — модель представления, которая служит прослойкой между View и Model.
+
+
+```mermaid
+sequenceDiagram
+
+    participant TCPChatServer
+    participant TCPChatClient_A
+    participant TCPChatClient_B
+    participant TCPChatClient_C
+
+
+    TCPChatClient_A ->> TCPChatServer: Сообщение от пользователя A
+    TCPChatServer -->> TCPChatClient_A: Дубль сообщения пользователю A
+    TCPChatServer -->> TCPChatClient_B: Сообщение от пользователя A
+    TCPChatClient_C ->> TCPChatServer: Пользователь С на сервер своё имя
+    TCPChatServer -->> TCPChatClient_A: C вошел в чат
+    TCPChatServer -->> TCPChatClient_B: C вошел в чат
+    TCPChatServer -->> TCPChatClient_C: подтверждение что C вошел в чат
+   
+```
+
+
+
+
