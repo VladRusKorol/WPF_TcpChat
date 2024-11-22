@@ -83,11 +83,8 @@ sequenceDiagram
 ```
 ## UML диаграмма серверного приложения
 ```mermaid
----
-title: Server
----
 classDiagram
-   
+   direction RL
     class ChatServer{
         -TcpListener _listener
         -List~ChatClient~ _clients
@@ -96,19 +93,57 @@ classDiagram
         -int _countClientConnected
         -int _countClientDisconnected
         -int _countMessageSend
+
+        Task ServerStartAndListenAsync()
+        void ServerStop()
+
+        Task AcceptChatClientAsync()
+        Task SendMessageAsync(string message)
+        void OnCommandDeleteClient(Guid id)
+        
     }
 
     class ChatClient{
             -TcpClient _client
+            -string? _name;
+            +Guid Id
+            +StreamWriter? _writer 
+            +StreamReader? _reader
+            Task ProcessAsync()
+            void Close()
     }
     style ChatServer fill:#fafafa,stroke:#333,stroke-width:2px
     note for ChatServer "Главный класс серверного приложения"
 
     
 
-    ChatServer --> ChatClient : Массив
+    ChatServer --> ChatClient : Создает объекты ChatClient, и добавляет их в лист
+    ChatServer <|--|> ChatClient : Подписка OnMessageNotify
+    ChatServer <|--|> ChatClient : Подписка OnDeleteClientNotify
 
+
+    class MainWindowViewModel{
+        +string? Port
+        +string? IpAddress
+        +ServerStatus Status
+        +string StatusMSG
+        +SolidColorBrush StatusForegroudColor
+        +int CurrentClientOnline
+        +int CountConnectedUsers
+        +int CountDisconnectedUsers
+        +int CountsSendMessages
+        void CountConnectedClient(int count)
+        void CountDisconnectedClient(int count)
+        void CountSendMessage(int count)
+    }
+
+     MainWindowViewModel --> ChatServer : Создает объекты ChatServer инициализируя его из даными из графический оболочки
+     MainWindowViewModel <|--|> ChatServer : Подписка CountClientConnect
+     MainWindowViewModel <|--|> ChatServer : Подписка CountClientDisconnect
+     MainWindowViewModel <|--|> ChatServer : Подписка CountSendMessage
+     MainWindowViewModel <|--|> ChatServer : Подписка CountClientOnline
 ```
+
 
 
 
