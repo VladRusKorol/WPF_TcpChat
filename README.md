@@ -143,7 +143,43 @@ classDiagram
      MainWindowViewModel <|--|> ChatServer : Подписка CountSendMessage
      MainWindowViewModel <|--|> ChatServer : Подписка CountClientOnline
 ```
-
+## UML диаграмма клиентского приложения
+```mermaid
+    classDiagram
+    direction RL
+    class ClientClass{
+        -string _ip
+        -int _port
+        -string _username
+        -TcpClient _client
+        -bool _isWorking
+        -StreamReader _reader
+        -StreamWriter _writer
+        +event OnReceiveMessageEvent
+        +event OnClientIsConnected
+        +void ConnectAsync()
+        +Task ReceiveMessageAsync()
+        +Task SendMessageAsync(string message)
+        +void Disconnect()
+    }
+    style ClientClass fill:#fafafa,stroke:#333,stroke-width:2px
+    note for ClientClass "Главный класс клиентского приложения"
+    class MainWindowViewModel{
+        +string? Port
+        +string? Ip
+        +ClientStatus Status
+        +string? UserName
+        +SolidColorBrush StatusForegroudColor
+        +string? Message
+        +ObservableCollection<string> _chatElements
+        +void OnClientIsConnected(bool isConnected)
+        +void OnRecivedMessage(string message)
+    }
+    MainWindowViewModel --> ClientClass : Создает объекты ClientClass инициализируя его из даными из графический оболочки
+     MainWindowViewModel <|--|> ClientClass : Подписка OnReceiveMessageEvent
+     MainWindowViewModel <|--|> ClientClass : Подписка OnClientIsConnected
+    
+```
 
 
 
