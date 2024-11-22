@@ -47,27 +47,36 @@
 >       + **ViewModel** — модель представления, которая служит прослойкой между View и Model.
 
 
+## Схема взаимодействия
 ```mermaid
 sequenceDiagram
 
-    participant TCPChatServer
-    participant TCPChatClient_A
-    participant TCPChatClient_B
-    participant TCPChatClient_C
+    participant Server
+    actor  Client_A
+    actor  Client_B
+    actor  Client_C
 
     rect rgb(191, 223, 255)
-    note right of TCPChatClient_A: Пользователь А отпраляет<br/> сообщение на сервер
-    TCPChatClient_A ->> TCPChatServer: Сообщение от пользователя A
-    TCPChatServer -->> TCPChatClient_A: Дубль сообщения пользователю A
-    TCPChatServer -->> TCPChatClient_B: Сообщение от пользователя A
+    note right of Client_A: Пользователь А отпраляет<br/> сообщение на сервер
+    Client_A ->> Server: Сообщение от пользователя A
+    Server -->> Client_A: Дубль сообщения пользователю A
+    Server -->> Client_B: Сообщение от пользователя A
     end
 
     rect rgb(191, 255, 214)
-    note right of TCPChatClient_C: Пользователь подключился к серверу
-    TCPChatClient_C ->> TCPChatServer: Пользователь С отправляет на сервер своё имя
-    TCPChatServer -->> TCPChatClient_A: C вошел в чат
-    TCPChatServer -->> TCPChatClient_B: C вошел в чат
-    TCPChatServer -->> TCPChatClient_C: подтверждение что C<br/> вошел в чат
+    note left of Client_C: Пользователь подключился к серверу
+    Client_C ->> Server: Пользователь С отправляет на сервер своё имя
+    Server -->> Client_A: C вошел в чат
+    Server -->> Client_B: C вошел в чат
+    Server -->> Client_C: подтверждение что C <br/> вошел в чат
+    end
+
+    rect rgb(255, 181, 179)
+    note left of Client_C: Пользователь отключился от сервера
+    Client_C --x Server: Фиксация потери соединения
+    note left of Server: Сервер получил уведомление<br/> об отключении пользователя С
+    Server -->> Client_A: C покинул в чат
+    Server -->> Client_B: C покинул в чат
     end
 
     
