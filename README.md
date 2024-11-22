@@ -47,7 +47,7 @@
 >       + **ViewModel** — модель представления, которая служит прослойкой между View и Model.
 
 
-## Схема взаимодействия
+## Схема взаимодействия представлений
 ```mermaid
 sequenceDiagram
 
@@ -77,12 +77,36 @@ sequenceDiagram
     note left of Server: Сервер получил уведомление<br/> об отключении пользователя С
     Server -->> Client_A: C покинул в чат
     Server -->> Client_B: C покинул в чат
-    end
+    end  
+```
+## UML диаграмма серверного приложения
+```mermaid
+---
+title: Server
+---
+classDiagram
+   
+    class ChatServer{
+        -TcpListener _listener
+        -List~ChatClient~ _clients
+
+        -int _countClientOnline
+        -int _countClientConnected
+        -int _countClientDisconnected
+        -int _countMessageSend
+    }
+
+    class ChatClient{
+            -TcpClient _client
+    }
+    style ChatServer fill:#fafafa,stroke:#333,stroke-width:2px
+    note for ChatServer "Главный класс серверного приложения"
 
     
-   
-```
 
+    ChatServer --> ChatClient : Массив
+
+```
 
 
 
