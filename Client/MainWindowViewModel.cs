@@ -176,6 +176,7 @@ namespace Client
                      if (_client is not null)
                      {
                          await _client.SendMessageAsync(Message);
+                         Message = "";
                      }
                  }
 
