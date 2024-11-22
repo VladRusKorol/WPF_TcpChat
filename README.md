@@ -55,14 +55,22 @@ sequenceDiagram
     participant TCPChatClient_B
     participant TCPChatClient_C
 
-
+    rect rgb(191, 223, 255)
+    note right of TCPChatClient_A: Пользователь А отпраляет<br/> сообщение на сервер
     TCPChatClient_A ->> TCPChatServer: Сообщение от пользователя A
     TCPChatServer -->> TCPChatClient_A: Дубль сообщения пользователю A
     TCPChatServer -->> TCPChatClient_B: Сообщение от пользователя A
-    TCPChatClient_C ->> TCPChatServer: Пользователь С на сервер своё имя
+    end
+
+    rect rgb(191, 255, 214)
+    note right of TCPChatClient_C: Пользователь подключился к серверу
+    TCPChatClient_C ->> TCPChatServer: Пользователь С отправляет на сервер своё имя
     TCPChatServer -->> TCPChatClient_A: C вошел в чат
     TCPChatServer -->> TCPChatClient_B: C вошел в чат
-    TCPChatServer -->> TCPChatClient_C: подтверждение что C вошел в чат
+    TCPChatServer -->> TCPChatClient_C: подтверждение что C<br/> вошел в чат
+    end
+
+    
    
 ```
 
