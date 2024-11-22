@@ -1,5 +1,7 @@
 # Desktop TcpChat :speech_balloon:
 ## Клиентское :computer: и серверное :desktop_computer:	графические приложения для Windows 
+![image](https://github.com/user-attachments/assets/e3909ac9-a483-4199-af0b-ca86acb92ad7)
+
 > [!IMPORTANT]
 > **Задача**:
 > Реализовать графический интерфейс серверного приложения, который будет являться точкой приёмки и рассылки сообщений от клиентов. Также 
